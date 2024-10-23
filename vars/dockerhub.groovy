@@ -1,11 +1,11 @@
-def call(){
+def call(String ProjectName, String ImageTag, Sting dockerHubUser, ){
   echo 'Pushing the code to Dockerhub'
                 withCredentials([usernamePassword(
                 'credentialsId':"dockerHubCred",
                 usernameVariable:"dockerHubUser",
                 passwordVariable:"dockerHubPassword")]){
-  sh "docker login -u ${env.dockerHubUser} -p ${env.dockerHubPassword} "
-  sh "docker image tag notesapp:latest ${env.dockerHubUser}/notes-app:latest"
-  sh "docker push ${env.dockerHubUser}/notes-app:latest"
+  sh "docker login -u ${dockerHubUser} -p ${dockerHubPassword} "
+  sh "docker image tag  $(ProjectName):$(ImageTag)  ${dockerHubUser}/${ProjectName}:${ImageTag}"
+  sh "docker push ${dockerHubUser}/${ProjectName}:{ImageTag}"
                 }
 }
